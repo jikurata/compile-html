@@ -1,9 +1,4 @@
 'use strict';
+const HtmlCompiler = require('./lib/HtmlCompiler.js');
 
-class HtmlCompiler {
-  constructor() {
-
-  }
-  
-}
 module.exports = HtmlCompiler;
