@@ -10,7 +10,7 @@ npm install @jikurata/compile-html
 const HtmlCompiler = require('@jikurata/compile-html');
 
 const compiler = new HtmlCompiler();
-let html = compiler.compile('src/index.html') // Synchronously returns compiled html as a string
+let html = compiler.compile('src/index.html') // Synchronously returns compiled html string
 ```
 ## Syntax
 Tags to be used in an html file:
@@ -22,12 +22,12 @@ Tags to be used in an html file:
 - **#import()** tells the compiler that the current html file uses another html file as a partial. The compiler will inject the partial at any instance of the same #import() tag.
 ## Example
 Project structure:
-src/
-src/index.html
-src/partial/head.html
-src/partial/content.html
-src/partial/more-content.html
-src/template/base.html
+- src/
+- src/index.html
+- src/partial/head.html
+- src/partial/content.html
+- src/partial/more-content.html
+- src/template/base.html<br/>
 *src/index.html:*
 ```
 #template(src/template/base.html)
@@ -42,7 +42,7 @@ src/template/base.html
 <html>
     #import(src/partial/head.html)
     <body>
-        {{content}}
+        #content()
     </body>
 </html>
 ```
