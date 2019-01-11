@@ -1,0 +1,4 @@
+__test__/
+.gitignore
+jest-config.json
+package-lock.json

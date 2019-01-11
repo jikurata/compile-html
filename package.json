@@ -1,0 +1,18 @@
+{
+  "name": "@jikurata/compile-html",
+  "version": "0.0.0",
+  "description": "Compile html from templates and partials",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --config jest-config.json"
+  },
+  "keywords": [
+    "html",
+    "compile"
+  ],
+  "author": "jikurata",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
