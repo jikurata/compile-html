@@ -15,4 +15,13 @@ describe('HtmlCompiler functional tests', () => {
       expect(tags.length).toBe(2);
     });
   });
+  describe('resolveUrl resolves a relative path into an absolute path', () => {
+    test('Returns http://mysite.com/dist/partial/foo/bar', () => {
+      const url = 'http://mysite.com/';
+      const currdir = 'dist/partial/foo';
+      const path = './bar'
+      const c = new HtmlCompiler(url);
+      expect(c.resolveUrl(currdir, path)).toMatch('http://mysite.com/dist/partial/foo/bar')
+    });
+  });
 });
