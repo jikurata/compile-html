@@ -23,5 +23,19 @@ describe('HtmlCompiler functional tests', () => {
       const c = new HtmlCompiler(url);
       expect(c.resolveUrl(currdir, path)).toMatch('http://mysite.com/dist/partial/foo/bar')
     });
+    test('Returns http://mysite.com/foo/bar', () => {
+      const url = 'http://mysite.com/';
+      const currdir = 'dist/partial/foo';
+      const path = 'foo/bar'
+      const c = new HtmlCompiler(url);
+      expect(c.resolveUrl(currdir, path)).toMatch('http://mysite.com/foo/bar')
+    });
+    test('Returns http://mysite.com/foo/bar', () => {
+      const url = 'http://mysite.com/';
+      const currdir = 'dist/partial/foo';
+      const path = '/foo/bar'
+      const c = new HtmlCompiler(url);
+      expect(c.resolveUrl(currdir, path)).toMatch('http://mysite.com/foo/bar')
+    });
   });
 });
