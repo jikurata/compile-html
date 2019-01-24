@@ -1,4 +1,4 @@
-# Compile Html v0.0.2
+# Compile Html v0.0.3
 Compile templates and partials into a single html file
 ---
 ## Install
@@ -12,22 +12,33 @@ const HtmlCompiler = require('@jikurata/compile-html');
 const compiler = new HtmlCompiler();
 let html = compiler.compile('src/index.html') // Synchronously returns compiled html string
 ```
+To build asset tags, a url must be provided in the constructor
+```
+url = 'localhost:3000';
+const compiler = new HtmlCompiler({url: url});
+```
 ## Syntax
 Tags to be used in an html file:
 ```
 #template(relative path)
 #import(relative path)
+#asset(relative path)
 ```
-- **#template()** tells the compiler that the current html file is using another html file as a template. The compiler will inject the current html at any instance of {{content}} within the template.
+- **#template()** tells the compiler that the current html file is using another html file as a template. The compiler will inject the current html at any instance of #content() within the template.
 - **#import()** tells the compiler that the current html file uses another html file as a partial. The compiler will inject the partial at any instance of the same #import() tag.
 ## Example
 Project structure:
 - src/
 - src/index.html
+- src/style.css
 - src/partial/head.html
 - src/partial/content.html
 - src/partial/more-content.html
 - src/template/base.html<br/>
+```
+const compiler = new HtmlCompiler({url: 'locahost:3000});
+compiler.compile('src/index.html');
+```
 *src/index.html:*
 ```
 #template(src/template/base.html)
@@ -51,6 +62,7 @@ Project structure:
 <head>
     <meta charset="utf-8">
     <title>Example</title>
+    <link type="relsheet" href="#asset(dist/style.css)"?>
 </head>
 ```
 *src/partial/content.html*:
@@ -75,6 +87,7 @@ Output:
     <head>
         <meta charset="utf-8">
         <title>Example1</title>
+        <link type="relsheet" href="localhost:3000/dist/style.css">
     </head>
     <body>
         <div>
@@ -87,4 +100,12 @@ Output:
         </div>
     </body>
 </html>
+```
+## Version log
+---
+**v0.0.3**
+- Added new tag *#asset(...)*
+- To build asset tags, a url must be provided in the HtmlCompiler constructor
+```
+const compiler = new HtmlCompiler({url: 'some url here'});
 ```
