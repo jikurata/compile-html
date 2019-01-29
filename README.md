@@ -103,6 +103,8 @@ Output:
 ```
 ## Version log
 ---
+**v0.0.4**
+- Added method *clearCache* to clear the html cache
 **v0.0.3**
 - Added new tag *#asset(...)*
 - To build asset tags, a url must be provided in the HtmlCompiler constructor
