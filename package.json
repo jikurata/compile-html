@@ -1,6 +1,6 @@
 {
   "name": "@jikurata/compile-html",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Compile html from templates and partials",
   "repository": "https://github.com/jikurata/compile-html",
   "main": "index.js",

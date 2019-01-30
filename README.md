@@ -1,4 +1,4 @@
-# Compile Html v0.0.6
+# Compile Html v0.0.7
 Compile templates and partials into a single html file
 ---
 ## Install
@@ -104,13 +104,15 @@ Output:
 ```
 ## Version log
 ---
-**v0.0.6**
+**v0.0.7**<br>
+- Fix an issue with regexp objects not finding tag matches
+**v0.0.6**<br>
 - Add #url tag to compiler search. #url resolves itself the same way #asset does, but now exists for semantics in the html file
-**v0.0.5**
+**v0.0.5**<br>
 - clearCache() now properly empties the compiler's cache
-**v0.0.4**
+**v0.0.4**<br>
 - Added method *clearCache* to clear the html cache
-**v0.0.3**
+**v0.0.3**<br>
 - Added new tag *#asset(...)*
 - To build asset tags, a url must be provided in the HtmlCompiler constructor
 ```
