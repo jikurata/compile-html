@@ -38,4 +38,11 @@ describe('HtmlCompiler functional tests', () => {
       expect(c.resolveAsset(currdir, path)).toMatch('http://mysite.com/foo/bar')
     });
   });
+  describe('clearCache empties the compiler cache', () => {
+    test('cache size should be 0', () => {
+      const c = new HtmlCompiler();
+      c.clearCache();
+      expect(Object.keys(c.cache).length).toBe(0);
+    });
+  });
 });

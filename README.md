@@ -1,4 +1,4 @@
-# Compile Html v0.0.3
+# Compile Html v0.0.5
 Compile templates and partials into a single html file
 ---
 ## Install
@@ -103,6 +103,8 @@ Output:
 ```
 ## Version log
 ---
+**v0.0.5**
+- clearCache() now properly empties the compiler's cache
 **v0.0.4**
 - Added method *clearCache* to clear the html cache
 **v0.0.3**
