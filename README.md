@@ -1,4 +1,4 @@
-# Compile Html v0.0.7
+# Compile Html v0.0.8
 Compile templates and partials into a single html file
 ---
 ## Install
