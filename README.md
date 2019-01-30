@@ -1,4 +1,4 @@
-# Compile Html v0.0.5
+# Compile Html v0.0.6
 Compile templates and partials into a single html file
 ---
 ## Install
@@ -23,6 +23,7 @@ Tags to be used in an html file:
 #template(relative path)
 #import(relative path)
 #asset(relative path)
+#url(relative path)
 ```
 - **#template()** tells the compiler that the current html file is using another html file as a template. The compiler will inject the current html at any instance of #content() within the template.
 - **#import()** tells the compiler that the current html file uses another html file as a partial. The compiler will inject the partial at any instance of the same #import() tag.
@@ -103,6 +104,8 @@ Output:
 ```
 ## Version log
 ---
+**v0.0.6**
+- Add #url tag to compiler search. #url resolves itself the same way #asset does, but now exists for semantics in the html file
 **v0.0.5**
 - clearCache() now properly empties the compiler's cache
 **v0.0.4**
