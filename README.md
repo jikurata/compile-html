@@ -104,6 +104,9 @@ Output:
 ```
 ## Version log
 ---
+**v0.0.8**
+- Implemented an environment tag *#---* to define any variables to be inserted in the html file
+- Implemented a variable tag #var() to tell the compiler to insert a value defined by the environment
 **v0.0.7**
 - Fix an issue with regexp objects not finding tag matches<br>
 **v0.0.6**

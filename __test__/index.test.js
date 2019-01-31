@@ -10,9 +10,9 @@ describe('HtmlCompiler functional tests', () => {
     });
   });
   describe('findTags scans a html file for relevant tags', () => {
-    test('Returns an array with length 2', () => {
-      const tags = compiler.findTags(compiler.readHtml('__test__/example/example1.html'));
-      expect(tags.length).toBe(2);
+    test('Returns an array with length 3', () => {
+      const tags = compiler.findTags(compiler.readHtmlFile('__test__/example/example1.html'));
+      expect(tags.length).toBe(3);
     });
   });
   describe('resolveAsset resolves a relative path into an absolute path', () => {
