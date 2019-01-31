@@ -1,4 +1,4 @@
-# Compile Html v0.0.8
+# Compile Html v0.0.9
 Compile templates and partials into a single html file
 ---
 ## Install
@@ -257,9 +257,10 @@ Output:
 ```
 ## Version log
 ---
-**v0.0.8**
+**v0.0.9**
 - Implemented an environment tag *#---* to define any variables to be inserted in the html file
-- Implemented a variable tag #var() to tell the compiler to insert a value defined by the environment
+- Implemented a variable tag #var() to tell the compiler to insert a value defined by the environment<br>
+**v0.0.8**
 - Nested template calls now compile in the order they are defined, top-to-bottom.<br>
 **v0.0.7**
 - Fixed an issue with regexp objects not finding tag matches<br>
