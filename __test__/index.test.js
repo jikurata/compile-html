@@ -10,9 +10,9 @@ describe('HtmlCompiler functional tests', () => {
     });
   });
   describe('findTags scans a html file for relevant tags', () => {
-    test('Returns an array with length 3', () => {
+    test('Returns an array with length 4', () => {
       const tags = compiler.findTags(compiler.readHtmlFile('__test__/example/example1.html'));
-      expect(tags.length).toBe(3);
+      expect(tags.length).toBe(4);
     });
   });
   describe('resolveAsset resolves a relative path into an absolute path', () => {
@@ -36,6 +36,30 @@ describe('HtmlCompiler functional tests', () => {
       const path = '/foo/bar'
       const c = new HtmlCompiler({url: url});
       expect(c.resolveAsset(currdir, path)).toMatch('http://mysite.com/foo/bar')
+    });
+  });
+  describe('extract() returns the contents of a tag', () => {
+    test('Returns /this/is/a/filepath.path', () => {
+      const c = new HtmlCompiler();
+      const tag = `#import(/this/is/
+        a/filepath.path)`;
+      const content = c.extract(tag)
+      expect(content).toEqual('/this/is/a/filepath.path');
+    });
+    test('Returns /this is/a/filepath.path', () => {
+      const c = new HtmlCompiler();
+      const tag = `#import(/this is/a/
+        filepath.path)`;
+      const content = c.extract(tag)
+      expect(content).toEqual('/this is/a/filepath.path');
+    });
+  });
+  describe('defineNamespace() creates importable variables to use during the compilation process', () =>{
+    test('Adds foo: bar and baz: foobar to the namespace property', () => {
+      const c = new HtmlCompiler();
+      const namespace = 'foo: bar; baz: foobar;';
+      c.defineNamespace(namespace);
+      expect(c.namespace).toEqual({foo: 'bar', baz: 'foobar'});
     });
   });
   describe('clearCache empties the compiler cache', () => {
