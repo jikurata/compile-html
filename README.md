@@ -1,4 +1,4 @@
-# Compile Html v0.0.9
+# Compile Html v0.0.10
 Compile templates and partials into a single html file
 ---
 ## Install
@@ -27,8 +27,8 @@ Tags to be used in an html file:
 #asset(relative path)
 #url(relative path)
 ```
-###C&#35namespace()
-*C&#35namespace(...key:value;)* defines a namespace for the compiler to use during compilation. **Namespaces will persist within an HtmlCompiler object**<br>
+### #namespace()
+*#namespace(...key:value;)* defines a namespace for the compiler to use during compilation. **Namespaces will persist within an HtmlCompiler object**<br>
 Namespace definitions are delimited by semi-colons(;)<br>
 Furthermore, property-value pairs are delimited by colons(:)<br>
 **Finally, append namespace definitions to the top of a html document. Not doing so might result in unintended behavior.**
@@ -49,8 +49,8 @@ Furthermore, property-value pairs are delimited by colons(:)<br>
 // ANOTHER GOOD NAMESPACE (No line breaks is OK)
 #namespace(foo:bar;baz:foobar;)
 ```
-###C&35var()
-*C&35var(key)* tells the compiler to search for a key-value pair in the namespace and to replace the tag with the value.
+### #var()
+*#var(key)* tells the compiler to search for a key-value pair in the namespace and to replace the tag with the value.
 #### Example
 ```
 // Somewhere before calling a #var() tag
@@ -68,7 +68,7 @@ Furthermore, property-value pairs are delimited by colons(:)<br>
     <h1>foobar</h1>
 </section>
 ```
-###C&35import()
+### #import()
 *#import(path)* tells the compiler to append the html document at path at the location of the import call.<br>
 #### Example
 ```
@@ -83,8 +83,8 @@ Furthermore, property-value pairs are delimited by colons(:)<br>
 <div>What are you?</div>
 <div>I'm an import</div>
 ```
-###C&35template()
-*C&35template(path)* tells the compiler to search the path for a html file and to treat it as a template.<br>
+### #template()
+*#template(path)* tells the compiler to search the path for a html file and to treat it as a template.<br>
 Templates are handled similarly to import calls, however any template file is expected to contain a **#content()** tag. The #content() tag tells the compiler to insert anything following the #template() call at the #content() tag.<br>
 **Regarding nested templates**<br>
 Do **not** nest a template call within another template file. Doing so might result in unexpected behavior.
@@ -134,8 +134,8 @@ However, you can perform template calls sequentially (More below):
 <div></div> is imported into #content() of templateB
 templateB is imported into #content() of templateA
 ```
-###C&35asset() & C&35url()
-*C&35asset(path)* and *C&35url(path)* both behave similarly. The purpose of these tags is to resolve relative href and src paths into their absolute paths using a provided url. The primary difference is that asset() is intended for file links and url() is for routes.
+### #asset() & #url()
+*#asset(path)* and *#url(path)* both behave similarly. The purpose of these tags is to resolve relative href and src paths into their absolute paths using a provided url. The primary difference is that asset() is intended for file links and url() is for routes.
 #### Example
 ```
 const compiler = new HtmlCompiler({url: 'http://mywebsite.com'})
@@ -257,22 +257,28 @@ Output:
 ```
 ## Version log
 ---
+**v0.0.10**
+- Fixed readme typos<br>
+
 **v0.0.9**
 - Implemented an environment tag *#---* to define any variables to be inserted in the html file
 - Implemented a variable tag #var() to tell the compiler to insert a value defined by the environment<br>
+
 **v0.0.8**
 - Nested template calls now compile in the order they are defined, top-to-bottom.<br>
+
 **v0.0.7**
 - Fixed an issue with regexp objects not finding tag matches<br>
+
 **v0.0.6**
 - Added #url tag to compiler search. #url resolves itself the same way #asset does, but now exists for semantics in the html file<br>
+
 **v0.0.5**
 - clearCache() now properly empties the compiler's cache<br>
+
 **v0.0.4**
 - Added method *clearCache* to clear the html cache<br>
+
 **v0.0.3**
 - Added new tag *#asset(...)*
 - To build asset tags, a url must be provided in the HtmlCompiler constructor
-```
-const compiler = new HtmlCompiler({url: 'some url here'});
-```
