@@ -10,7 +10,7 @@ npm install @jikurata/compile-html
 const HtmlCompiler = require('@jikurata/compile-html');
 
 const compiler = new HtmlCompiler();
-let html = compiler.compile('src/index.html') // Synchronously returns compiled html string
+let html = compiler.compile('src/index.html') // Synchronously returns compiled html
 ```
 To build asset tags, a url must be provided in the constructor
 ```
@@ -20,41 +20,137 @@ const compiler = new HtmlCompiler({url: url});
 ## Syntax
 Tags to be used in an html file:
 ```
-C&#35---
+#namespace(...property: value)
 #var(variable)
 #template(relative path)
 #import(relative path)
 #asset(relative path)
 #url(relative path)
 ```
-###C&#35---
-*C&#35---* defines the namespace the compiler will use during compilation.<br>
+###C&#35namespace()
+*C&#35namespace(...key:value;)* defines a namespace for the compiler to use during compilation. **Namespaces will persist within an HtmlCompiler object**<br>
 Namespace definitions are delimited by semi-colons(;)<br>
-Furthermore, property-value pairs are delimited by colons(:)
+Furthermore, property-value pairs are delimited by colons(:)<br>
+**Finally, append namespace definitions to the top of a html document. Not doing so might result in unintended behavior.**
 #### Examples
 ```
-// BAD NAMESPACE
-foo: bar
-baz: foobar
-#---
-```
-```
-// BAD NAMESPACE
-foo: bar baz: foobar
-#---
-```
-```
-// BAD NAMESPACE
-foo= bar baz= foobar
-#---
-```
-**If using this feature, it must appear at the top of the html**
-- **#template()** tells the compiler that the current html file is using another html file as a template. The compiler will inject the current html at any instance of #content() within the template.
-- **#import()** tells the compiler that the current html file uses another html file as a partial. The compiler will inject the partial at any instance of the same #import() tag.
+// BAD NAMESPACE (No semi-colon delimiters)
+#namespace(
+    foo: bar
+    baz: foobar
+)
 
-## Example
+// GOOD NAMESPACE
+#namespace(
+    foo: bar;
+    baz: foobar;
+)
+
+// ANOTHER GOOD NAMESPACE (No line breaks is OK)
+#namespace(foo:bar;baz:foobar;)
+```
+###C&35var()
+*C&35var(key)* tells the compiler to search for a key-value pair in the namespace and to replace the tag with the value.
+#### Example
+```
+// Somewhere before calling a #var() tag
+#namespace(
+    foo: bar
+    baz: foobar
+)
+// And then somewhere else down the compilation process
+<section id="#var(foo)>">
+    <h1>#var(baz)</h1>
+</section>
+
+// At the end of compilation
+<section id="bar">
+    <h1>foobar</h1>
+</section>
+```
+###C&35import()
+*#import(path)* tells the compiler to append the html document at path at the location of the import call.<br>
+#### Example
+```
+//some/file.html
+<div>I'm an import</div>
+
+//compile/this.html
+<div>What are you?</div>
+#import(some/file.html)
+
+// Result for compile/this.html
+<div>What are you?</div>
+<div>I'm an import</div>
+```
+###C&35template()
+*C&35template(path)* tells the compiler to search the path for a html file and to treat it as a template.<br>
+Templates are handled similarly to import calls, however any template file is expected to contain a **#content()** tag. The #content() tag tells the compiler to insert anything following the #template() call at the #content() tag.<br>
+**Regarding nested templates**<br>
+Do **not** nest a template call within another template file. Doing so might result in unexpected behavior.
+However, you can perform template calls sequentially (More below):
+#### Examples
+```
+//some/template.html
+<!DOCTYPE html>
+<html>
+    <head>
+        #import(head.html)
+    </head>
+    <body>
+        #content()
+    </body>
+</html>
+// head.html
+<meta charset="utf-8">
+<title>Template Example</title>
+// index.html
+#template(some/template/html)
+<header>
+    <h1>Example</h1>
+</header>
+
+// After compiling index.html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Template Example</title>
+    </head>
+    <body>
+        <header>
+            <h1>Example</h1>
+        </header>
+    </body>
+</html>
+```
+```
+// Sequential template calls
+#template(templateA.html)
+#template(templateB.html)
+<div></div>
+
+// Result:
+<div></div> is imported into #content() of templateB
+templateB is imported into #content() of templateA
+```
+###C&35asset() & C&35url()
+*C&35asset(path)* and *C&35url(path)* both behave similarly. The purpose of these tags is to resolve relative href and src paths into their absolute paths using a provided url. The primary difference is that asset() is intended for file links and url() is for routes.
+#### Example
+```
+const compiler = new HtmlCompiler({url: 'http://mywebsite.com'})
+
+// In some html file
+<link rel="stylesheet type="text/css" href="#asset(css/style.css)">
+<a href="#url(/home)">return</a>
+
+// Result
+
+<link rel="stylesheet type="text/css" href="http://mywebsite.com/css/style.css">
+<a href="http://mywebsite.com/home">return</a>
+```
+## Full Example
 Project structure:
-- src/
 - src/index.html
 - src/style.css
 - src/partial/head.html
@@ -68,9 +164,10 @@ compiler.compile('src/index.html');
 ```
 *src/index.html:*
 ```
+#namespace(
 foo: bar;
 baz: foobar;
-#---
+)
 #template(src/template/base.html)
 #template(src/template/nested.template.html)
 <section>
@@ -163,8 +260,7 @@ Output:
 **v0.0.8**
 - Implemented an environment tag *#---* to define any variables to be inserted in the html file
 - Implemented a variable tag #var() to tell the compiler to insert a value defined by the environment
-- Nested template calls now compile in the order they are defined, top-to-bottom.
-- 
+- Nested template calls now compile in the order they are defined, top-to-bottom.<br>
 **v0.0.7**
 - Fixed an issue with regexp objects not finding tag matches<br>
 **v0.0.6**
