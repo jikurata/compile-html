@@ -55,8 +55,8 @@ Furthermore, property-value pairs are delimited by colons(:)<br>
 ```
 // Somewhere before calling a #var() tag
 #namespace(
-    foo: bar
-    baz: foobar
+    foo: bar;
+    baz: foobar;
 )
 // And then somewhere else down the compilation process
 <section id="#var(foo)>">
