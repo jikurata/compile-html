@@ -1,4 +1,4 @@
-# Compile Html v0.0.10
+# Compile Html v0.0.12
 Compile templates and partials into a single html file
 ---
 ## Install
@@ -257,8 +257,11 @@ Output:
 ```
 ## Version log
 ---
+**v0.0.12**
+- Refactor Jest tests to Taste tests
+
 **v0.0.10**
-- Fixed readme typos<br>
+- Fixed readme typos
 
 **v0.0.9**
 - Implemented an environment tag *#---* to define any variables to be inserted in the html file

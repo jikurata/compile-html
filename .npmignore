@@ -1,4 +1,3 @@
-__test__/
+test/
 .gitignore
-jest-config.json
 package-lock.json

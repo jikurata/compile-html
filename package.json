@@ -1,11 +1,11 @@
 {
   "name": "@jikurata/compile-html",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Compile html from templates and partials",
   "repository": "https://github.com/jikurata/compile-html",
   "main": "index.js",
   "scripts": {
-    "test": "jest --config jest-config.json"
+    "test": "node ./test/index.test.js"
   },
   "keywords": [
     "html",
@@ -14,6 +14,6 @@
   "author": "jikurata",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^23.6.0"
+    "@jikurata/taste": "0.0.4"
   }
 }
